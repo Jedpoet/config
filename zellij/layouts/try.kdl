@@ -1,0 +1,54 @@
+layout {
+    default_tab_template { // 這表示這個配置會應用於所有新的 tab
+        children // 這裡是 tab 內部的 pane
+        pane size=1 borderless=true { // 定義一個高度為 1 的 pane，用來放置狀態欄
+            plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+                // 這個插件的路徑看起來是正確的
+
+                // 你定義了左側的格式，包含了 {mode}，這正是你需要的！
+                // {session} 顯示當前 Zellij 會話名稱
+                // JadePoet 是一個硬編碼的名稱，你可以選擇使用 {session} 或你喜歡的固定文字
+                format_left   "{mode} #[fg=#89B4FA,bold] JadePoet"
+                // format_left   "{mode} #[fg=#89B4FA,bold]{session}" // 建議切換回這個，可以動態顯示會話名
+
+                // 中間顯示 tab 列表
+                format_center "{tabs}"
+
+                // 右側顯示 Git 分支和時間日期
+                format_right  "{command_git_branch} {datetime}"
+
+                // 兩個模塊之間的間隔
+                format_space  ""
+
+                // 邊框設置
+                border_enabled  "false" // 禁用邊框，讓狀態欄看起來更簡潔
+                border_char     "─"
+                border_format   "#[fg=#6C7086]{char}"
+                border_position "top"
+
+                // 單一 pane 時是否隱藏框架
+                hide_frame_for_single_pane "false"
+
+                // 模式顯示的顏色配置
+                // 這會改變 {mode} 模塊本身的背景色，使其更顯眼
+                mode_normal  "#[bg=blue] "    // 正常模式時的背景色
+                mode_tmux    "#[bg=#ffc387] "  // tmux 模式 (如果你有啟用 tmux 兼容模式)
+
+                // Tab 列表的顏色配置
+                tab_normal   "#[fg=#6C7086] {name} " // 非活動 tab 的文字顏色
+                tab_active   "#[fg=#9399B2,bold,italic] {name} " // 活動 tab 的文字顏色、粗體和斜體
+
+                // 自定義命令模塊：Git 分支
+                command_git_branch_command     "git rev-parse --abbrev-ref HEAD" // 執行 git 命令獲取分支名
+                command_git_branch_format      "#[fg=blue] {stdout} " // 輸出格式和顏色
+                command_git_branch_interval    "10" // 每 10 秒更新一次
+                command_git_branch_rendermode  "static" // 靜態渲染模式
+
+                // 時間日期模塊
+                datetime        "#[fg=#6C7086,bold] {format} " // 格式和顏色
+                datetime_format "%H:%M %A, %d %b %Y" // 時間日期格式
+                datetime_timezone "Asia/Taipei" // 時區設置
+            }
+        }
+    }
+}
