@@ -18,22 +18,31 @@ cmp.setup({
         -- Use <C-b/f> to scroll the docs
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        -- Use <CR>(Enter) to confirm selection
-        -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
-        -- A super tab
-        -- sourc: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            -- Hint: if the completion menu is visible select next one
+        -- Enter 確認，選單未顯示則換行
+        ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
-                cmp.select_next_item()
-            elseif has_words_before() then
-                cmp.complete()
+                cmp.confirm({ select = true })
             else
                 fallback()
             end
-        end, { "i", "s" }), -- i - insert mode; s - select mode
+        end, { "i", "s" }),
+
+        -- Tab 選擇下一個，或跳轉 Snippet，或縮排
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            -- 如果補全選單可見，選擇下一個
+            if cmp.visible() then
+                cmp.select_next_item()
+            -- 如果在 snippet 中，跳到下一個節點
+            elseif luasnip.jumpable(1) then
+                luasnip.jump(1)
+            -- 否則，執行預設的 Tab 行為 (縮排)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+
+        -- Shift-Tab 選擇上一個
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
