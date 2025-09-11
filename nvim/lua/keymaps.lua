@@ -46,7 +46,6 @@ vim.keymap.set("n", "<leader>t", function()
     -- end, { noremap = true })
 end, { expr = true, noremap = true })
 vim.keymap.set("n", "<leader>g", ":BufferLineGoToBuffer ", opts)
-vim.keymap.set("n", "<leader>bd", "<cmd>bd<CR>", opts) -- 關閉 buffer
 
 -- find setting
 local builtin = require('telescope.builtin')
@@ -72,6 +71,9 @@ end, { remap = true })
 vim.keymap.set('', 'T', function()
     hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = -1 })
 end, { remap = true })
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 
 -- vim.keymap.set('n', '<leader>r', "<cmd>ToggleTerm size=5 dir=~/Desktop direction=horizontal name=desktop<CR>", opts)
 vim.keymap.set("n", "<leader>r", function()
@@ -92,15 +94,6 @@ vim.keymap.set("n", "<C-e>", function()
     local neo_tree = require("neo-tree.command")
     neo_tree.execute({ toggle = true })
 end, opts)
-
--- vim.keymap.set("i", "<CR>", function()
---     local line = vim.api.nvim_get_current_line()
---     if line:find("{}") then
---         return "<CR><Esc>O"
---     else
---         return "<CR>"
---     end
--- end, { expr = true, noremap = true })
 
 -----------------
 -- Insert mode --
