@@ -35,7 +35,7 @@
 
 2.  **克隆倉庫**:
     ```bash
-    git clone https://github.com/jadepoet/config/nvim.git ~/.config/nvim
+    git clone https://github.com/jadepoet/config.git ~/.config/
     ```
 
 3.  **啟動 Neovim**:
