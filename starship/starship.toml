@@ -9,26 +9,24 @@ symbol = " "
 
 [directory]
 style = "bold blue"
-format = "[ \uf011 ](bg:yellow)[](fg:yellow bg:blue)[   $path ](bg:blue fg:white)[](fg:blue bg:none) "
+format = "[ \uf011 ](fg:white bg:#364F6B)[](fg:#364F6B bg:#43618C)[   $path ](bg:#43618C fg:white)[](fg:#43618C bg:none) "
 
 [git_branch]
-format = "[ $branch](bold purple) "
-style = "bold purple"
+format = "[ $branch](bold #8E9AAF) "
+style = "bold #8E9AAF"
 truncation_length = 32
 
 [git_status]
 format = '([✘ $conflicted](bold red) )([+$added](green) )([- $deleted](red) )([?$untracked](yellow) )'
-style = "bold purple"
+style = "bold #8E9AAF"
 
 # 右側時間
 [time]
 disabled = false
-time_format = "%T"  # 顯示 HH:MM:SS
-format = "[ $time ](bg:gray fg:blue)[  ](fg:gray)"
-style = "bold cyan"
+time_format = "%T" # 顯示 HH:MM:SS
+format = "[ $time ](fg:white)[  ](fg:white)"
+style = "bold white"
 
 [character]
-success_symbol = "[❯](bold green)"
+success_symbol = "[❯](bold #8E9AAF)"
 error_symbol = "[❯](bold red)"
-
-# end
