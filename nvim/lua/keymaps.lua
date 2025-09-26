@@ -78,14 +78,14 @@ vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 -- vim.keymap.set('n', '<leader>r', "<cmd>ToggleTerm size=5 dir=~/Desktop direction=horizontal name=desktop<CR>", opts)
 vim.keymap.set("n", "<leader>r", function()
     if vim.fn.has("win32") == 1 then
-        vim.o.shell = "pwsh"
+        vim.o.shell = "nu"
     end
     return "<cmd>lua toggle_terminal()<CR>"
 end, { expr = true, noremap = true })
 
 vim.keymap.set("n", "<leader>[", function()
     if vim.fn.has("win32") == 1 then
-        vim.o.shell = "pwsh"
+        vim.o.shell = "nu"
     end
     return "<cmd>terminal<CR>"
 end, { expr = true, noremap = true })
