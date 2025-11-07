@@ -352,6 +352,10 @@ require("lazy").setup({
     {
         'nvimdev/dashboard-nvim',
         event = 'VimEnter',
+        cond = function()
+            -- 檢查啟動時傳入的檔案參數數量是否為 0
+            return vim.fn.argc() == 0
+        end,
         config = function()
             require('dashboard').setup {
                 theme = "doom", -- 或 hyper，選你喜歡的樣式
@@ -401,7 +405,7 @@ require("lazy").setup({
                     },
                     footer = {
                         "Peace cannot be kept by force.",
-                        "It can only be achieved by understanding." ,
+                        "It can only be achieved by understanding.",
                         -- { "請別讓我獨自匍匐於滂沱世末之雨" }
                     }
                 } -- config

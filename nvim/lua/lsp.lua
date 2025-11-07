@@ -10,7 +10,7 @@ require('mason').setup({
 
 require('mason-lspconfig').setup({
     -- A list of servers to automatically install if they're not already installed
-    ensure_installed = { 'lua_ls', 'ast_grep', 'texlab', 'marksman', 'basedpyright', 'ruff' }
+    ensure_installed = { 'lua_ls', 'ast_grep', 'texlab', 'marksman', 'pyright', 'ruff' }
 })
 
 -- Set different settings for different languages' LSP.
@@ -80,11 +80,11 @@ local lspconfig = require("lspconfig")
 -- 2. Add the configuration below. The syntax is `lspconfig.<name>.setup(...)`
 -- Hint (find <name> here) : https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
--- 使用 basedpyright 作為主要 LSP
-lspconfig.basedpyright.setup({
+-- 使用 pyright 作為主要 LSP
+lspconfig.pyright.setup({
     on_attach = on_attach,
     settings = {
-        basedpyright = {
+        pyright = {
             typeCheckingMode = "basic", -- 可選：off, basic, strict
         },
     },
