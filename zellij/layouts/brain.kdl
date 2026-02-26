@@ -1,0 +1,73 @@
+layout {
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+                // format_left   "{mode} #[fg=#89B4FA,bold]{session}"
+                format_left   "{mode} #[fg=#89B4FA,bold] JadePoet"
+                format_center "{tabs}"
+                format_right  "{command_git_branch} {datetime}"
+                format_space  ""
+
+                border_enabled  "false"
+                border_char     "-"
+                border_format   "#[fg=#6C7086]{char}"
+                border_position "top"
+
+                hide_frame_for_single_pane "false"
+
+                mode_normal        "#[bg=#6C7086,fg=#CDD6F4] NORMAL #[fg=#6C7086]"
+                mode_locked        "#[bg=#F38BA8,fg=#11111B] LOCKED #[fg=#F38BA8]"
+                mode_resize        "#[bg=#FAB387,fg=#11111B] RESIZE #[fg=#FAB387]"
+                mode_pane          "#[bg=#A6E3A1,fg=#11111B]  PANE  #[fg=#A6E3A1]"
+                mode_tab           "#[bg=#89B4FA,fg=#11111B]  TAB   #[fg=#89B4FA]"
+                mode_scroll        "#[bg=#F9E2AF,fg=#11111B] SCROLL #[fg=#F9E2AF]"
+                mode_enter_search  "#[bg=#CBA6F7,fg=#11111B] SEARCH #[fg=#CBA6F7]"
+                mode_search        "#[bg=#CBA6F7,fg=#11111B] SEARCH #[fg=#CBA6F7]"
+                mode_rename_tab    "#[bg=#89B4FA,fg=#11111B] RENAME #[fg=#89B4FA]"
+                mode_rename_pane   "#[bg=#A6E3A1,fg=#11111B] RENAME #[fg=#A6E3A1]"
+                mode_session       "#[bg=#74C7EC,fg=#11111B] SESSION #[fg=#74C7EC]"
+                mode_move          "#[bg=#F2CDCD,fg=#11111B]  MOVE  #[fg=#F2CDCD]"
+                mode_prompt        "#[bg=#F5C2E7,fg=#11111B] PROMPT #[fg=#F5C2E7]"
+                mode_tmux          "#[bg=#FFC387,fg=#11111B]  TMUX  #[fg=#FFC387]"
+
+                tab_normal   "#[fg=#6C7086] {name} "
+                tab_active   "#[fg=#9399B2,bold,italic] {name} "
+
+                command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+                command_git_branch_format      "#[fg=blue] {stdout} "
+                command_git_branch_interval    "10"
+                command_git_branch_rendermode  "static"
+
+                datetime        "#[fg=#6C7086,bold] {format} "
+                datetime_format "%H:%M %A, %d %b %Y"
+                datetime_timezone "Asia/Taipei"
+            }
+        }
+    }
+
+    tab name="Workspace" focus=true {
+        pane split_direction="vertical" {
+            // 左側：番茄鐘 (佔比 20%)
+            // 這裡假設你使用 termdown 這個 CLI 計時器，也可以換成你習慣的 Rust CLI 工具
+            // 左側欄：再進行水平切割 (上下)
+            pane size="20%" split_direction="horizontal" {
+                // 左上：跑題/閃念筆記區 (佔據左側剩下的所有空間)
+                pane command="nvim" {
+                    args "~/Documents/Note/distractions.md"
+                }
+                
+                // 左下：番茄鐘 (固定高度 5 行，剛好夠顯示倒數計時)
+                pane size=5 command="pomo.sh" 
+            }
+
+            // 中間：主力思考區 (佔比 55%)
+            pane size="55%" command="zsh" 
+            // 右側：子彈筆記 / TODO (佔比 25%)
+            // 可以是另一個 Neovim 視窗開啟 todo.md，或是直接跑 taskwarrior
+            pane size="25%" command="nvim" {
+                args "~/Documents/Note/todo.md"
+            }
+        }
+    }
+}
