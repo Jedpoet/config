@@ -1,7 +1,7 @@
 # starship.toml
 
 format = """$directory$git_branch$git_status$fill$time
-$character"""
+"""
 
 # 將右側 prompt 顯示時間（需 fill）
 [fill]
@@ -28,5 +28,5 @@ format = "[ $time ](fg:white)[  ](fg:white)"
 style = "bold white"
 
 [character]
-success_symbol = "[❯](bold #8E9AAF)"
-error_symbol = "[❯](bold red)"
+# success_symbol = "[❯](bold #8E9AAF)"
+# error_symbol = "[❯](bold red)"
