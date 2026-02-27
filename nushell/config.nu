@@ -31,7 +31,7 @@ $env.config.color_config.bool = {|x| if $x { 'light_green' } else { 'light_red' 
 # --- alias ---
 alias la = ls -a
 alias nvide = neovide
-alias vim = neovide
+alias vim = nvim
 alias lg = lazygit
 
 # --- StarShip ---
@@ -78,7 +78,7 @@ def --env y [...args] {
 }
 
 # --- vim ---
-def vim [...prompt_parts: string] {
+def nvd [...prompt_parts: string] {
     let file = ($prompt_parts | str join "")
     if $file == "" {
         job spawn {neovide}
@@ -101,3 +101,4 @@ def g [...prompt_parts: string] {
     let full_prompt = ($"產生一個 Nushell 指令來完成以下任務：" | append $prompt | append "。只輸出指令本身，不要包含任何說明、解釋或程式碼區塊標記。") | str join " "
     echo $full_prompt | gemini
 }
+# source $"($nu.home-path)/.cargo/env.nu"
