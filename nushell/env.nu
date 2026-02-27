@@ -18,3 +18,14 @@
 # them for future reference.
 
 zoxide init nushell | save -f ~/.zoxide.nu
+
+let cargo_bin = ($env.HOME | path join ".cargo" "bin")
+$env.PATH = ($env.PATH | prepend $cargo_bin | uniq)
+
+# 先定義 nvim 的路徑
+let nvim_path = "/opt/nvim-linux-x86_64/bin"
+
+# 檢查該路徑是否存在（只有在 WSL/Linux 下才會是 true），存在才加入 PATH
+if ($nvim_path | path exists) {
+    $env.PATH = ($env.PATH | prepend $nvim_path)
+}
