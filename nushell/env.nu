@@ -19,7 +19,7 @@
 
 zoxide init nushell | save -f ~/.zoxide.nu
 
-let cargo_bin = ($env.HOME | path join ".cargo" "bin")
+let cargo_bin = ("~" | path expand | path join ".cargo" "bin")
 $env.PATH = ($env.PATH | prepend $cargo_bin | uniq)
 
 # 先定義 nvim 的路徑
