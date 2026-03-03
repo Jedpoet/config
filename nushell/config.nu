@@ -34,6 +34,7 @@ alias nvide = neovide
 alias vim = nvim
 alias lg = lazygit
 alias cat = bat
+alias gt = gitui
 
 # --- StarShip ---
 $env.STARSHIP_SHELL = "nu"
