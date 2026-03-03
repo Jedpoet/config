@@ -35,6 +35,7 @@ alias vim = nvim
 alias lg = lazygit
 alias cat = bat
 alias gt = gitui
+alias 'git log' = serie
 
 # --- StarShip ---
 $env.STARSHIP_SHELL = "nu"
