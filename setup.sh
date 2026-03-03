@@ -139,7 +139,7 @@ ln -sf ~/config ~/.config
 echo "正在設定 Git 全域環境..."
 
 # 設定你的開發者名稱與信箱
-git config --global user.name "玉聿"
+git config --global user.name "jadepoet0231"
 git config --global user.email "jadepoet0231@gmail.com" # 請記得把這裡換成你真實的信箱
 
 # 現代 Git 的良好預設習慣
