@@ -13,9 +13,9 @@ require("starship"):setup({
 })
 
 require("yaziline"):setup({
-    color = "#81A1C1",                --"#98c379",
-    secondary_color = "#5A6078",
-    default_files_color = "darkgray", -- color of the file counter when it's inactive
+    color = "#81A1C1",            --"#98c379",
+    secondary_color = "#43618C",  -- "#5A6078",
+    default_files_color = "gray", -- color of the file counter when it's inactive
     selected_files_color = "white",
     yanked_files_color = "green",
     cut_files_color = "red",
@@ -25,7 +25,7 @@ require("yaziline"):setup({
     separator_close = "",
     separator_open_thin = "",
     separator_close_thin = "",
-    separator_head = " ", -- "",
+    separator_head = "",  -- "",
     separator_tail = " ", -- "",
 
     select_symbol = "",
