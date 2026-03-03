@@ -13,6 +13,9 @@ echo "正在更新 apt 套件庫與安裝基礎套件..."
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl git build-essential pkg-config libssl-dev xclip
 
+
+echo "Git 設定完成！"
+
 # 安裝 Rust 開發環境
 if ! command -v cargo &> /dev/null; then
     echo "正在安裝 Rust 工具鏈..."
@@ -131,5 +134,28 @@ fi
 echo "正在配置 dotfiles..."
 # 假設你的 github repo clone 在 ~/dotfiles
 ln -sf ~/config ~/.config
+
+# --- Git 基礎設定 ---
+echo "正在設定 Git 全域環境..."
+
+# 設定你的開發者名稱與信箱
+git config --global user.name "玉聿"
+git config --global user.email "jadepoet0231@gmail.com" # 請記得把這裡換成你真實的信箱
+
+# 現代 Git 的良好預設習慣
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+git config --global core.editor "nvim" # 既然裝了 Neovim，當然要設為預設編輯器
+
+# (選用) 讓終端機裡的 git log 變得超好看的 alias
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+ssh-keygen -t ed25519 -C "jadepoet0231@gmail.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+echo "github ssh key:"
+cat ~/.ssh/id_ed25519.pub
+
+echo "將公鑰複製至github"
 
 echo "🎉 環境建置完成！請重新啟動終端機"
