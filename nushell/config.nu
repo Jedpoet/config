@@ -35,6 +35,7 @@ alias vim = nvim
 alias lg = lazygit
 alias cat = bat
 alias gt = gitui
+alias zl = zellij
 alias 'git log' = serie
 
 # --- StarShip ---
@@ -88,6 +89,48 @@ def nvd [...prompt_parts: string] {
         return
     }
     job spawn {neovide $file} 
+}
+
+# think init
+def tinit [] {
+    mkdir notes
+    "# 執行區\n\n*當前專注點*：\n\n# 代辦區\n\n -[ ] \n\n# 思考區\n- " | save notes/BRAIN.md
+    touch notes/complete.md
+    print "✅ 思考流專案初始化完成：已建立 BRAIN.md 與 complete.md"
+}
+def think [] {
+    mut current_dir = $env.PWD
+    mut root_dir = ""
+
+    # 1. 向上尋找專案根目錄 (判斷基準為 BRAIN.md 或 .git)
+    while $current_dir != "/" {
+        if ($"($current_dir)/notes/BRAIN.md" | path exists) or ($"($current_dir)/.git" | path exists) {
+            $root_dir = $current_dir
+            break
+        }
+        $current_dir = ($current_dir | path dirname)
+    }
+
+    # 2. 如果找不到根目錄，攔截並詢問使用者
+    if $root_dir == "" {
+        print "❌ 錯誤：找不到專案根目錄 (缺少 BRAIN.md 或 .git)。"
+        let response = (input $"❓ 要在當前目錄 ($env.PWD) 執行 tinit 建立思考流架構嗎？ [y/N]: ")
+
+        if $response =~ '^[yYeEsS]*[yY]$' {
+            tinit
+            $root_dir = $env.PWD
+        } else {
+            print "🚫 已取消啟動。"
+            return
+        }
+    }
+
+    # 3. 切換到正確的根目錄，並啟動 Zellij
+    cd $root_dir
+    print $"🚀 切換至專案根目錄: ($root_dir)"
+    print "啟動 Zellij 思考流..."
+
+    zellij --layout think
 }
 
 # --- Gemini CLI Helper ---
