@@ -19,7 +19,7 @@ require("lazy").setup({
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
-                ensure_installed = { "c", "cpp", "rust", "python", "lua", "vim" },
+                ensure_installed = { "c", "cpp", "rust", "python", "lua", "vim", "nu" },
                 sync_install = false,
                 auto_install = false,
                 highlight = { enable = true, },
