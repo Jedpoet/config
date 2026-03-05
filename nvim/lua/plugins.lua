@@ -19,12 +19,32 @@ require("lazy").setup({
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
-                ensure_installed = { "c", "cpp", "rust", "python", "lua", "vim", "nu" },
+            local ts_config = {
+                ensure_installed = { "c", "cpp", "rust", "python", "lua", "vim", "html", "css", "typescript", "svelte", "nu" },
                 sync_install = false,
                 auto_install = false,
-                highlight = { enable = true, },
+                highlight = { enable = true },
                 indent = { enable = true },
-            })
+            }
+
+            if vim.fn.has("win32") == 1 then
+                ts_config.c_compiler = {
+                    command =
+                    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\msvc\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe",
+                    defines = { "_CRT_SECURE_NO_WARNINGS" },
+                    extra_cflags = { "/std:c17" },
+                    is_msvc = true
+                }
+                ts_config.cpp_compiler = {
+                    command =
+                    "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\msvc\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe",
+                    defines = { "_CRT_SECURE_NO_WARNINGS" },
+                    extra_cflags = { "/std:c++20" },
+                    is_msvc = true
+                }
+            end
+
+            configs.setup(ts_config)
         end
     },
     {
@@ -455,6 +475,71 @@ require("lazy").setup({
                     },
                 }
             })
+        end
+    },
+    -- 右側狀態欄
+    {
+        "lewis6991/satellite.nvim",
+        lazy = true,
+        event = { "BufRead", "BufNewFile" },
+        config = function()
+            require('satellite').setup {
+                current_only = false,
+                winblend = 50,
+                zindex = 40,
+                excluded_filetypes = {},
+                width = 2,
+                handlers = {
+                    cursor = {
+                        enable = true,
+                        -- Supports any number of symbols
+                        symbols = { '⎺', '⎻', '⎼', '⎽' }
+                        -- symbols = { '⎻', '⎼' }
+                        -- Highlights:
+                        -- - SatelliteCursor (default links to NonText
+                    },
+                    search = {
+                        enable = true,
+                        -- Highlights:
+                        -- - SatelliteSearch (default links to Search)
+                        -- - SatelliteSearchCurrent (default links to SearchCurrent)
+                    },
+                    diagnostic = {
+                        enable = true,
+                        signs = { '-', '=', '≡' },
+                        min_severity = vim.diagnostic.severity.HINT,
+                        -- Highlights:
+                        -- - SatelliteDiagnosticError (default links to DiagnosticError)
+                        -- - SatelliteDiagnosticWarn (default links to DiagnosticWarn)
+                        -- - SatelliteDiagnosticInfo (default links to DiagnosticInfo)
+                        -- - SatelliteDiagnosticHint (default links to DiagnosticHint)
+                    },
+                    gitsigns = {
+                        enable = true,
+                        signs = { -- can only be a single character (multibyte is okay)
+                            add = "│",
+                            change = "│",
+                            delete = "-",
+                        },
+                        -- Highlights:
+                        -- SatelliteGitSignsAdd (default links to GitSignsAdd)
+                        -- SatelliteGitSignsChange (default links to GitSignsChange)
+                        -- SatelliteGitSignsDelete (default links to GitSignsDelete)
+                    },
+                    marks = {
+                        enable = true,
+                        show_builtins = false, -- shows the builtin marks like [ ] < >
+                        key = 'm'
+                        -- Highlights:
+                        -- SatelliteMark (default links to Normal)
+                    },
+                    quickfix = {
+                        signs = { '-', '=', '≡' },
+                        -- Highlights:
+                        -- SatelliteQuickfix (default links to WarningMsg)
+                    }
+                },
+            }
         end
     },
 
