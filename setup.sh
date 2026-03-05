@@ -176,6 +176,13 @@ if [ ! -f ~/.ssh/id_ed25519 ]; then
     echo "未找到 SSH 金鑰，正在自動生成新的 ed25519 金鑰..."
     # 加上 -N "" 代表預設不設密碼，-f 指定路徑，這樣就能跳過所有詢問，全自動生成
     ssh-keygen -t ed25519 -C "jadepoet0231@gmail.com" -N "" -f ~/.ssh/id_ed25519
+    # 將金鑰加入 agent (將錯誤訊息導向黑洞，避免重複加入時報錯干擾畫面)
+    ssh-add ~/.ssh/id_ed25519
+    echo -e "\n========================================="
+    echo "你的 GitHub SSH 公鑰如下："
+    cat ~/.ssh/id_ed25519.pub
+    echo "========================================="
+    echo "👉 請確認已將上述公鑰複製至 GitHub (Settings -> SSH and GPG keys)！"
 else
     echo "SSH 金鑰已存在，安全跳過生成步驟。"
 fi
@@ -185,13 +192,5 @@ if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     eval "$(ssh-agent -s)" > /dev/null
 fi
 
-# 將金鑰加入 agent (將錯誤訊息導向黑洞，避免重複加入時報錯干擾畫面)
-ssh-add ~/.ssh/id_ed25519 2>/dev/null
-
-echo -e "\n========================================="
-echo "你的 GitHub SSH 公鑰如下："
-cat ~/.ssh/id_ed25519.pub
-echo "========================================="
-echo "👉 請確認已將上述公鑰複製至 GitHub (Settings -> SSH and GPG keys)！"
 
 echo "🎉 環境建置完成！請重新啟動終端機"
