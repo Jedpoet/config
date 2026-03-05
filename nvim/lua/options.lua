@@ -53,10 +53,13 @@ vim.api.nvim_create_autocmd("CursorHold", {
     end,
 })
 
+local python_path = vim.fn.stdpath('config') .. '/.venv/Scripts/python.exe'
+vim.g.python3_host_prog = python_path
 
 -- if vim.fn.has("win32") == 1 then
 --     vim.o.shell = "pwsh"
 -- end
+
 
 -- Neovide setting
 if vim.g.neovide then

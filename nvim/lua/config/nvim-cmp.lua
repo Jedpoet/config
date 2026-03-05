@@ -1,9 +1,3 @@
-local has_words_before = function()
-    unpack = unpack or table.unpack
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 local luasnip = require("luasnip")
 local cmp = require("cmp")
 
@@ -33,10 +27,10 @@ cmp.setup({
             -- 如果補全選單可見，選擇下一個
             if cmp.visible() then
                 cmp.select_next_item()
-            -- 如果在 snippet 中，跳到下一個節點
+                -- 如果在 snippet 中，跳到下一個節點
             elseif luasnip.jumpable(1) then
                 luasnip.jump(1)
-            -- 否則，執行預設的 Tab 行為 (縮排)
+                -- 否則，執行預設的 Tab 行為 (縮排)
             else
                 fallback()
             end
@@ -78,8 +72,8 @@ cmp.setup({
     -- Set source precedence
     sources = cmp.config.sources({
         { name = 'nvim_lsp' }, -- For nvim-lsp
-        { name = 'luasnip' }, -- For luasnip user
-        { name = 'buffer' }, -- For buffer word completion
-        { name = 'path' }, -- For path completion
+        { name = 'luasnip' },  -- For luasnip user
+        { name = 'buffer' },   -- For buffer word completion
+        { name = 'path' },     -- For path completion
     })
 })
