@@ -47,11 +47,6 @@ layout {
     }
 
     tab name="Workspace" focus=true {
-        // 預設的 UI 狀態列（放在最上或最下都可以）
-        // pane size=1 borderless=true {
-        //     plugin location="zellij:tab-bar"
-        // }
-
         pane split_direction="vertical" {
             // 主工作區 (佔據 75%)：預設聚焦在這裡，讓你直接開始打 Code 或寫作
             pane size="75%" focus=true 
@@ -61,9 +56,5 @@ layout {
                 args "notes/BRAIN.md"
             }
         }
-
-        // pane size=2 borderless=true {
-        //     plugin location="zellij:status-bar"
-        // }
     }
 }
