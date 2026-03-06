@@ -126,18 +126,18 @@ vim.keymap.set('n', '<leader>dc', function()
 
     -- 4. 附加寫入當前目錄下的 complete.md
     -- "a" 代表 append (附加在檔案最後面)
-    local file = io.open("complete.md", "a")
+    local file = io.open("notes/complete.md", "a")
     if file then
         file:write(final_string .. "\n")
         file:close()
 
         -- 5. 寫入成功後，刪除當前行
         vim.api.nvim_del_current_line()
-        print("✅ 任務已歸檔至 complete.md")
+        print("✅ 任務已歸檔")
     else
-        print("❌ 無法寫入 complete.md")
+        print("❌ 無法寫入")
     end
-end, { desc = "將當前任務移至 complete.md" })
+end, { desc = "將當前任務歸檔" })
 
 -----------------
 -- Insert mode --
