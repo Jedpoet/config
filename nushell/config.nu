@@ -36,7 +36,7 @@ alias lg = lazygit
 alias cat = bat
 alias gt = gitui
 alias zl = zellij
-alias 'git log' = serie
+alias 'git log' = git log --graph --oneline --all
 
 # --- StarShip ---
 $env.STARSHIP_SHELL = "nu"
@@ -94,7 +94,7 @@ def nvd [...prompt_parts: string] {
 # think init
 def tinit [] {
     mkdir notes
-    "# 執行區\n\n*當前專注點*：\n\n# 代辦區\n\n- [ ] \n\n# 思考區\n- " | save notes/BRAIN.md
+    "# 執行區\n\n*當前專注點*：\n\n# 代辦區\n\n- [ ] \n\n# 思考區\n\n- " | save notes/BRAIN.md
     touch notes/complete.md
     print "✅ 思考流專案初始化完成：已建立 BRAIN.md 與 complete.md"
 }
