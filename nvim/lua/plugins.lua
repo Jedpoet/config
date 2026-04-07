@@ -201,14 +201,14 @@ require("lazy").setup({
         end,
     },
 
-    -- 自動切換輸入法
-    {
-        "Jedpoet/im-switch.nvim",
-        -- event = "VimEnter",
-        config = function()
-            require("im-switch").setup()
-        end,
-    },
+    -- -- 自動切換輸入法
+    -- {
+    --     "Jedpoet/im-switch.nvim",
+    --     -- event = "VimEnter",
+    --     config = function()
+    --         require("im-switch").setup()
+    --     end,
+    -- },
 
     {
         "kylechui/nvim-surround",
