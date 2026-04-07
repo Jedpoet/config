@@ -95,6 +95,50 @@ vim.keymap.set("n", "<C-e>", function()
     neo_tree.execute({ toggle = true })
 end, opts)
 
+vim.keymap.set('n', '<leader>t', function()
+    local completed_line = line:gsub("%- %[ %]", "- [x]")
+end, opts)
+
+-- brain
+-- 一鍵將任務移至 complete.md 並加上時間戳記
+vim.keymap.set('n', '<leader>dc', function()
+    -- 防呆：只在 BRAIN.md 中作用
+    local filename = vim.fn.expand('%:t')
+    if filename:lower() ~= 'brain.md' then
+        print("⚠️ 此快捷鍵只能在 BRAIN.md 中使用")
+        return
+    end
+    -- 1. 取得當前行的文字
+    local line = vim.api.nvim_get_current_line()
+
+    -- 如果該行是空的，就不執行
+    if line:match("^%s*$") then
+        print("空白行，無效操作")
+        return
+    end
+
+    -- 2. 將未完成的打勾狀態轉為已完成 (可選，防呆用)
+    local completed_line = line:gsub("%- %[ %]", "- [x]")
+
+    -- 3. 產生當前時間戳記
+    local time_stamp = os.date("%Y-%m-%d %H:%M")
+    local final_string = completed_line .. " *(完成於: " .. time_stamp .. ")*"
+
+    -- 4. 附加寫入當前目錄下的 complete.md
+    -- "a" 代表 append (附加在檔案最後面)
+    local file = io.open("notes/complete.md", "a")
+    if file then
+        file:write(final_string .. "\n")
+        file:close()
+
+        -- 5. 寫入成功後，刪除當前行
+        vim.api.nvim_del_current_line()
+        print("✅ 任務已歸檔")
+    else
+        print("❌ 無法寫入")
+    end
+end, { desc = "將當前任務歸檔" })
+
 -----------------
 -- Insert mode --
 -----------------

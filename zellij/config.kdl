@@ -149,6 +149,9 @@ keybinds clear-defaults=true {
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
         bind "Ctrl q" { Quit; }
+        // 綁定 Ctrl + k 呼叫浮動的 INBOX.md
+        // 請記得把 /Users/你的帳號/INBOX.md 換成你實際的絕對路徑
+        bind "Ctrl k" { Run "nvim" "/home/jadepoet/INBOX.md" { floating true; close_on_exit true; }; }
     }
     shared_except "locked" "move" {
         bind "Ctrl h" { SwitchToMode "move"; }

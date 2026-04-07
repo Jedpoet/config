@@ -37,6 +37,9 @@ lspconfig.ruff.setup({})
 -- Go
 lspconfig.gopls.setup({})
 
+-- nushell
+lspconfig.nushell.setup({})
+
 -- Lua
 lspconfig.lua_ls.setup({
     settings = {

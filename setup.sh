@@ -21,8 +21,23 @@ if ! command -v cargo &> /dev/null; then
     echo "正在安裝 Rust 工具鏈..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     source "$HOME/.cargo/env"
+    rustup component add rust-analyzer
 else
     echo "Rust 已經安裝"
+fi
+
+if ! command --version gh &> /dev/null; then
+    (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
+else
+    echo "gh 已經安裝"
 fi
 
 # 安裝 Node.js 環境
@@ -176,6 +191,13 @@ if [ ! -f ~/.ssh/id_ed25519 ]; then
     echo "未找到 SSH 金鑰，正在自動生成新的 ed25519 金鑰..."
     # 加上 -N "" 代表預設不設密碼，-f 指定路徑，這樣就能跳過所有詢問，全自動生成
     ssh-keygen -t ed25519 -C "jadepoet0231@gmail.com" -N "" -f ~/.ssh/id_ed25519
+    # 將金鑰加入 agent (將錯誤訊息導向黑洞，避免重複加入時報錯干擾畫面)
+    ssh-add ~/.ssh/id_ed25519
+    echo -e "\n========================================="
+    echo "你的 GitHub SSH 公鑰如下："
+    cat ~/.ssh/id_ed25519.pub
+    echo "========================================="
+    echo "👉 請確認已將上述公鑰複製至 GitHub (Settings -> SSH and GPG keys)！"
 else
     echo "SSH 金鑰已存在，安全跳過生成步驟。"
 fi
@@ -185,13 +207,5 @@ if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     eval "$(ssh-agent -s)" > /dev/null
 fi
 
-# 將金鑰加入 agent (將錯誤訊息導向黑洞，避免重複加入時報錯干擾畫面)
-ssh-add ~/.ssh/id_ed25519 2>/dev/null
-
-echo -e "\n========================================="
-echo "你的 GitHub SSH 公鑰如下："
-cat ~/.ssh/id_ed25519.pub
-echo "========================================="
-echo "👉 請確認已將上述公鑰複製至 GitHub (Settings -> SSH and GPG keys)！"
 
 echo "🎉 環境建置完成！請重新啟動終端機"
