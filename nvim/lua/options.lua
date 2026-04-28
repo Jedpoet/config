@@ -75,4 +75,15 @@ if vim.g.neovide then
     vim.o.winblend = 80                              -- 浮動視窗透明
     vim.o.pumblend = 80                              -- popup 補全視窗透明
     vim.o.termguicolors = true
+    vim.g.neovide_input_ime = false
+    vim.api.nvim_create_autocmd("InsertEnter", {
+        callback = function()
+            vim.g.neovide_input_ime = true
+        end,
+    })
+    vim.api.nvim_create_autocmd("InsertLeave", {
+        callback = function()
+            vim.g.neovide_input_ime = false
+        end,
+    })
 end
